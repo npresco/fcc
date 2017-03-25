@@ -1,0 +1,13 @@
+{
+  "name": "timestamp",
+  "version": "1.0.0",
+  "description": "Timestamp Microservice for FCC",
+  "main": "index.js",
+  "repository": {},
+  "author": "Noah Prescott",
+  "license": "MIT",
+  "devDependencies": {
+    "express": "^4.15.2",
+    "pug": "^2.0.0-beta11"
+  }
+}
