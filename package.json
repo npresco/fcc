@@ -6,7 +6,7 @@
   "repository": {},
   "author": "Noah Prescott",
   "license": "MIT",
-  "devDependencies": {
+  "dependencies": {
     "express": "^4.15.2",
     "pug": "^2.0.0-beta11"
   }
