@@ -5,6 +5,7 @@ var app = express();
 // Views config
 app.set("views", "./views");
 app.set("view engine", "pug");
+app.set('trust proxy', true);
 app.use(express.static(__dirname + '/public'));
 
 // Middleware
