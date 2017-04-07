@@ -1,0 +1,9 @@
+{
+  "name": "url-shortener",
+  "version": "1.0.0",
+  "description": "FCC Url Shortener Micro Sice",
+  "main": "index.js",
+  "repository": "https://github.com/npresco/fcc.git",
+  "author": "Noah Prescott <noah.prescott@gmail.com>",
+  "license": "MIT"
+}
