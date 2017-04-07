@@ -1,0 +1,14 @@
+{
+  "name": "request-header-parser",
+  "version": "1.0.0",
+  "description": "FCC Project for Request Header Parse",
+  "main": "index.js",
+  "repository": "https://github.com/npresco/fcc.git",
+  "author": "Noah Prescott <noah.prescott@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.15.2",
+    "morgan": "^1.8.1",
+    "pug": "^2.0.0-beta11"
+  }
+}
