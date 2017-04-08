@@ -16,7 +16,7 @@ app.use(express.static(__dirname + '/public'));
 // Middleware
 app.use(morgan('combined'));
 
-MongoClient.connect(`mongodb://${process.env.MONGODB_USER}:${process.env.MONGODB_PASSWORD}.mlab.com:57040/npresco-fcc-url-shortener`, function (err, database) {
+MongoClient.connect(process.env.MONGODB_URI, function (err, database) {
   if (err) return console.log(err);
   dbUrls = database.collection("urls");
 
