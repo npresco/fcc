@@ -5,7 +5,7 @@ var express = require('express');
 var morgan = require('morgan');
 var app = express();
 const MongoClient = require('mongodb').MongoClient;
-var db;
+var dbUrls;
 
 // Views config
 app.set("views", "./views");
@@ -18,7 +18,7 @@ app.use(morgan('combined'));
 
 MongoClient.connect(`mongodb://${process.env.MONGODB_USER}:${process.env.MONGODB_PASSWORD}.mlab.com:57040/npresco-fcc-url-shortener`, function (err, database) {
   if (err) return console.log(err);
-  db = database;
+  dbUrls = database.collection("urls");
 
   // Routes
   app.get("/", function (req, res) {
@@ -28,12 +28,37 @@ MongoClient.connect(`mongodb://${process.env.MONGODB_USER}:${process.env.MONGODB
 
   app.get("/new/:url(*)", function (req, res) {
     // create shortend url
-    var url = req.params.url;
+    var queryUrl = req.params.url;
+    var hostUrl = req.protocol + '://' + req.get('host')
 
-    res.end(`${url}`);
-
+    dbUrls.count().then(function(numIds) {
+      dbUrls.findOne({ originalUrl: queryUrl }, function(err, result) {
+          if (err) return console.log(err)
+          if (result) {
+            res.end(JSON.stringify(result));
+          } else {
+            dbUrls.insertOne(
+              {
+                _id: numIds + 1,
+                shortenedUrl: `${hostUrl}/${numIds + 1}`,
+                originalUrl: queryUrl
+              }, function(err, doc) {
+                if (err) return console.log(err);
+                res.end(JSON.stringify(doc.ops));
+              }
+            );
+          }
+        });
+    });
   });
 
+  app.get("/:id", function (req, res) {
+    var reqId = parseInt(req.params.id);
+    dbUrls.findOne({ _id: reqId }, function(err, data) {
+      if (err) return console.log(err)
+      res.redirect(data.originalUrl);
+    });
+  })
 
   // Listen on port
   app.listen(process.env.PORT || 5000, () => {
