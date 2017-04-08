@@ -56,7 +56,10 @@ MongoClient.connect(process.env.MONGODB_URI, function (err, database) {
     var reqId = parseInt(req.params.id);
     dbUrls.findOne({ _id: reqId }, function(err, data) {
       if (err) return console.log(err)
-      res.redirect(data.originalUrl);
+      if (data)
+        res.redirect(data.originalUrl);
+      else
+        res.send("No match found!")
     });
   })
 
