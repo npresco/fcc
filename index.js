@@ -1,70 +1,77 @@
-// Load env
-require('dotenv').config()
+/* eslint no-console: ["error", { allow: ["warn", "error"] }] */
 
-var express = require('express');
-var morgan = require('morgan');
-var app = express();
-const MongoClient = require('mongodb').MongoClient;
-var dbUrls;
+// Load env
+require("dotenv").config();
+
+const express = require("express");
+const morgan = require("morgan");
+const MongoClient = require("mongodb").MongoClient;
+const path = require("path");
+
+const app = express();
 
 // Views config
 app.set("views", "./views");
 app.set("view engine", "pug");
-app.set('trust proxy', true);
-app.use(express.static(__dirname + '/public'));
+app.set("trust proxy", true);
+app.use(express.static(path.join(__dirname, "/public")));
 
 // Middleware
-app.use(morgan('combined'));
+app.use(morgan("combined"));
 
-MongoClient.connect(process.env.MONGODB_URI, function (err, database) {
-  if (err) return console.log(err);
-  dbUrls = database.collection("urls");
+MongoClient.connect(process.env.MONGODB_URI, (err, database) => {
+  if (err) return console.warn(err);
+  const dbUrls = database.collection("urls");
 
   // Routes
-  app.get("/", function (req, res) {
+  app.get("/", (req, res) => {
     // Display project use cases
     res.end("Hello");
   });
 
-  app.get("/new/:url(*)", function (req, res) {
+  app.get("/new/:url(*)", (req, res) => {
     // create shortend url
-    var queryUrl = req.params.url;
-    var hostUrl = req.protocol + '://' + req.get('host')
+    const queryUrl = req.params.url;
+    const hostUrl = `${req.protocol}://${req.get("host")}`;
 
-    dbUrls.count().then(function(numIds) {
-      dbUrls.findOne({ originalUrl: queryUrl }, function(err, result) {
-          if (err) return console.log(err)
-          if (result) {
-            res.end(JSON.stringify(result));
-          } else {
-            dbUrls.insertOne(
-              {
-                _id: numIds + 1,
-                shortenedUrl: `${hostUrl}/${numIds + 1}`,
-                originalUrl: queryUrl
-              }, function(err, doc) {
-                if (err) return console.log(err);
-                res.end(JSON.stringify(doc.ops));
-              }
-            );
-          }
-        });
+    dbUrls.count().then((numIds) => {
+      dbUrls.findOne({ originalUrl: queryUrl }, (err2, result) => {
+        if (err2) return console.warn(err2);
+        if (result) {
+          res.end(JSON.stringify(result));
+        } else {
+          dbUrls.insertOne({
+            _id: numIds + 1,
+            shortenedUrl: `${hostUrl}/${numIds + 1}`,
+            originalUrl: queryUrl,
+          }, (err3, doc) => {
+            if (err3) return console.warn(err3);
+            res.end(JSON.stringify(doc.ops));
+            return undefined;
+          },
+                          );
+        }
+        return undefined;
+      });
     });
   });
 
-  app.get("/:id", function (req, res) {
-    var reqId = parseInt(req.params.id);
-    dbUrls.findOne({ _id: reqId }, function(err, data) {
-      if (err) return console.log(err)
-      if (data)
+  app.get("/:id", (req, res) => {
+    const reqId = parseInt(req.params.id, 10);
+    dbUrls.findOne({ _id: reqId }, (err3, data) => {
+      if (err3) return console.warn(err);
+      if (data) {
         res.redirect(data.originalUrl);
-      else
-        res.send("No match found!")
+      } else {
+        res.send("No match found!");
+      }
+      return undefined;
     });
-  })
+  });
 
   // Listen on port
   app.listen(process.env.PORT || 5000, () => {
-    console.log('listening on 5000');
+    console.warn("listening on 5000");
   });
+  return undefined;
 });
