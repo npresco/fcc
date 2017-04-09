@@ -2,10 +2,16 @@ html
   head
     link(rel="stylesheet" type="text/css" href="/style.css")
   body
-    h1 Request Header Parser Microservice
-    h2 Your IP
-    p #{ip}
-    h2 Your Lanuage
-    p #{language}
-    h2 Your Software
-    p #{software}
+    h1 Url Shortener Microservice
+    h2 User Stories
+    ul
+      li I can pass a URL as a parameter and I will receive a shortened URL in the JSON response.
+      li If I pass an invalid URL that doesn't follow the valid http://www.example.com format, the JSON response will contain an error instead.
+      li When I visit that shortened URL, it will redirect me to my original link.
+    h2 Example
+    h3 Input
+    p #{url}/new/http://www.noahprescott.com
+    h3 Output
+    p {"_id":1,"shortenedUrl":"http://localhost:5000/1","originalUrl":"http://www.google.com"}
+    h3 Usage
+    p Go to #{url}/1 and the browser redirects to http://www.google.com
