@@ -6,6 +6,9 @@
   "repository": {},
   "author": "Noah Prescott",
   "license": "MIT",
+  "engines": {
+    "node": "6.11.1"
+  },
   "dependencies": {
     "express": "^4.15.2",
     "morgan": "^1.8.1",
