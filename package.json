@@ -7,7 +7,7 @@
   "author": "Noah Prescott",
   "license": "MIT",
   "engines": {
-    "node": "6.11.1"
+    "node": "8.2.1"
   },
   "dependencies": {
     "express": "^4.15.2",
