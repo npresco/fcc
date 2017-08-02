@@ -1,0 +1,9 @@
+{
+  "name": "image-search",
+  "version": "1.0.0",
+  "description": "FCC Image Search Abstraction Layer Service",
+  "main": "index.js",
+  "repository": "https://github.com/npresco/fcc.git",
+  "author": "Noah Prescott <noah.prescott@gmail.com>",
+  "license": "MIT"
+}
