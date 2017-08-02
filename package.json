@@ -6,6 +6,9 @@
   "repository": "https://github.com/npresco/fcc.git",
   "author": "Noah Prescott <noah.prescott@gmail.com>",
   "license": "MIT",
+  "engines": {
+    "node": "8.2.1"
+  },
   "dependencies": {
     "express": "^4.15.2",
     "morgan": "^1.8.1",
