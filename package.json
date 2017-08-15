@@ -1,0 +1,9 @@
+{
+  "name": "file-metadata",
+  "version": "1.0.0",
+  "description": "FCC File Metadata Microservice",
+  "main": "index.js",
+  "repository": "https://github.com/npresco/fcc.git",
+  "author": "Noah Prescott <noah.prescott@gmail.com>",
+  "license": "MIT"
+}
